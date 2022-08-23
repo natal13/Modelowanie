@@ -1,0 +1,204 @@
+#include <iostream>
+#include <stdlib.h>
+#include <unistd.h>
+#include <math.h>
+#include <stdio.h>
+#include <time.h>
+
+#define MAX1 100
+
+#define MAX2 100
+
+
+int main(int argc, char** argv)
+ {
+    srand(time(NULL));
+    
+    char symbole[11]={'@', '%', '#', 'x', '+', '=', ':', '-', '.', ' ', '\0'};
+    
+    float min = 9999;
+	float max = -9999;
+	
+	int licz = 0;
+	int i, j, k, l, m, n, p;
+
+	int temp;
+	
+	
+    float macierz1[MAX1][MAX2];
+    float macierz2[MAX1][MAX2];
+    
+  	int miejsce = 1;
+	int miejsce2 = 1;
+	
+	int m1;
+	m1= rand()%60;
+	int m2;
+	m2 = rand()%60;
+	
+    int szar;
+ 
+    //ZERUJEMY MACIERZE
+    for(i= 0; i < MAX1; i++)
+    {
+   	 for(j = 0; j< MAX2; j++)
+   	 {
+   		 macierz1[i][j] = 0;
+   		 macierz2[i][j] = 0;
+   		 
+   	 }
+   	 
+    }
+    //PRZYPISYWANIE WARTOŒCI BRZEGOWYCH
+    for(k = 0; k<MAX1; k++)
+    {
+   	 
+   	 macierz1[k][0] = 0;
+   	 macierz1[k][99] = 0;
+   	 macierz1[0][k] = 0;
+   	 
+   	 macierz2[k][0] = 0;
+   	 macierz2[0][k] = 0;
+   	 macierz2[k][99] = 0;
+   	 
+ 
+   	 
+   	 macierz1[99][0] = 0;
+   	 macierz2[99][0] = 0;
+   	 macierz1[99][k] = 0;
+   	 macierz2[99][k] = 0;
+   	 
+   
+   	 
+
+   	 
+   //	miejsce = macierz2[m1][m2];
+  
+  }
+	macierz1[m1][m2] = 1;
+   	macierz2[m1][m2] = 1;
+    miejsce = macierz2[m1][m2];
+     	
+  //ZACZÊCIE PÊTLI UZUPE£NIAJ¥CEJ
+  while(licz<100)
+    {
+   	 
+   	for(i = 1; i < 99; i++)
+   	 {
+   		 for(j = 1; j < 99; j++)
+   		 {
+   		
+   			  
+   			 if(i==m1 && j == m2)
+   		 	{
+				
+   		 		continue;
+				
+   				 macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4;  
+   			}
+   			 
+   	else	 if(i%8 ==0  && j%8 ==0 )
+   		{	
+   		 	miejsce = macierz2[i-1][j]; //do góry
+   		 	macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+		
+   	else	 if(i%8 ==1 & j%8 ==1 )
+   		{
+   			miejsce = macierz2[i-1][j-1];//do góry na ukos w lew¹
+   			macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+		
+	else	if(i%8 ==2 & j%8 ==2 )// do góry na ukos w praw¹
+   		{
+   		 		miejsce = macierz2[i-1][j+1];
+   		 		macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+		
+	else	if(i%8 ==3 & j%8 ==3 ) //na lewo
+   		{
+   		 		miejsce = macierz2[i][j-1];
+   		 		macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+		
+	else	if(i%8 ==4 & j%8 ==4 )//na prawo
+   		{
+   		 	miejsce = macierz2[i][j+1];
+   		 	macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+		
+	else	if(i%8 ==5 & j%8 ==5 )//w dó³
+		{
+			miejsce = macierz2[i+1][j];
+			macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+   		 	
+	else	if(i%8 ==6 & j%8 ==6 )//w dó³ na lewy ukos
+   		{
+   			miejsce = macierz2[i+1][j-1];
+			macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 	 	
+		}
+   		 
+   	else //w dó³ na prawy ukos 
+   		{
+   			miejsce = macierz2[i-1][j+1]; 	
+   			macierz2[i][j] = (macierz1[i-1][j] + macierz1[i+1][j] + macierz1[i][j+1] + macierz1[i][j-1]) /4; 
+		}
+   			 
+   			 
+   			}
+   	
+		}
+   			 
+		//WYLICZANIE WARTOŒCI MIN I MAX
+
+for(i=1; i<MAX1-1; i++)
+	{
+		for(j=1; j<MAX2-1; j++)
+		{
+				macierz1[i][j]=macierz2[i][j];
+				
+				if(min>macierz2[i][j])
+					min= macierz2[i][j];
+				if(max<macierz2[i][j]) 
+					max=macierz2[i][j];
+		}
+	}	 
+   	
+   			
+	//PRZEKSZTA£CENIA NA SYMBOLE
+	for(i = 0; i<MAX1; i++)
+	{
+		for(j=0; j<MAX2; j++)
+		{
+			szar =  (1-macierz2[i][j]-min)/(max-min)*9;
+			printf("%c", symbole[szar]);
+		}
+			printf("\n");
+	}
+	
+	//WYŒWIETLANIE MACIERZY Z WARTOŒCIAMI
+/*	for(n = 0; n<10; n++)
+   	 {
+   		 for(p = 0; p<10; p++)
+   		 {
+   			 printf("%1.2f ", macierz2[n][p]);
+   			 
+   			 macierz1[n][p] = macierz2[n][p];
+   		 }
+   		 
+   		 printf("\n");
+   	 }
+   	 printf(" min: %1.2f i  max: %1.2f", min, max);
+   	 */
+   	 
+	 sleep(1);
+   	 system("cls");
+}
+  
+  
+  return 0;
+}
+
+
+
